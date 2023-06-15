@@ -11,4 +11,4 @@ de hasta 100 elementos y que me permita introducir el elemento a buscar por el u
 
 ## Repositorio de Nataya Flores
 
-[natayadev - ClasesBootcamp-CodigoFacilito]https://github.com/natayadev/ClasesBootcamp-CodigoFacilito/
+* [natayadev - ClasesBootcamp-CodigoFacilito](https://github.com/natayadev/ClasesBootcamp-CodigoFacilito/)
