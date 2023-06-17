@@ -21,4 +21,4 @@ from ecommerce.ecommerce import main
 # OK!
 # python -m ecommerce
 if __name__ == '__main__':
-    main(prog='ecommerce')
+    main()

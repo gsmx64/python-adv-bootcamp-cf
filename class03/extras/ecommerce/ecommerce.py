@@ -10,7 +10,7 @@ from ecommerce import shopping_car as sc
 
 #if __name__ == '__main__':
     
-def main(prog=None, args=None):     
+def main():     
     '''product1 = Product('product1', 100)
     product2 = Product('product2', 150)'''
     
@@ -26,4 +26,3 @@ def main(prog=None, args=None):
     shopping_car.add_product(product2)
 
     print(shopping_car.total)
-
