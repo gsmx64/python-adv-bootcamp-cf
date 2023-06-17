@@ -9,7 +9,7 @@ El aforo del auditorio es de 10 personas.
 
 ## Original
 
-[estructuras]https://github.com/natayadev/ClasesBootcamp-CodigoFacilito/blob/main/estructuras
+* [estructuras](https://github.com/natayadev/ClasesBootcamp-CodigoFacilito/blob/main/estructuras)
 
 ## Repositorio de Nataya Flores
 

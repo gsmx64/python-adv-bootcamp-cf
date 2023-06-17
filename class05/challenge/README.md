@@ -7,7 +7,7 @@ de hasta 100 elementos y que me permita introducir el elemento a buscar por el u
 
 ## Original
 
-[Archivo reto.py]https://github.com/natayadev/ClasesBootcamp-CodigoFacilito/blob/main/algoritmos/reto.py
+* [Archivo reto.py](https://github.com/natayadev/ClasesBootcamp-CodigoFacilito/blob/main/algoritmos/reto.py)
 
 ## Repositorio de Nataya Flores
 
