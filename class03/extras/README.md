@@ -4,9 +4,11 @@
 
 Código modificado para que funcione lo del curso (ver en  min 4:06).
 
-### Instalar con Python
+### Ejecutar con Python
 
+```
 python -m  ecommerce
+```
 
 
 ## Relacionado al Curso:
