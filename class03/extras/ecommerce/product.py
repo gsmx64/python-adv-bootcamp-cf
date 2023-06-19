@@ -10,9 +10,6 @@ class Product:
 
 
 def _run(name, price):
-    """
-    Make a reporter that can be used when no reporter is specified.
-    """
     return Product(name, price)
 
 """def create_new_product():
