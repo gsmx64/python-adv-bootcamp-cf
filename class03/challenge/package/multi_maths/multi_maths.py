@@ -36,9 +36,9 @@ def main():  # pylint: disable=R0915
     else:
         os.system('clear')
 
-    print('-'*49+' \n')
+    print('-' * 49 + ' \n')
     print('              Multi Maths Package  \n')
-    print('-'*49+' \n')
+    print('-' * 49 + ' \n')
     language = input('(1) English - (2) Español: ')
 
     if language == '2':
@@ -117,10 +117,8 @@ def main():  # pylint: disable=R0915
     print_examples(code_example, "core.run('stat', 'mode', (data_list,))",
                    core.run('stat', 'mode', (data_list,)))
 
-    print('\n'+('-'*49)+'\n')
-    view_credits = input(
-        '¿Quiere ver los créditos del Challenge? ' +
-        'Ingrese (Y) para verlos, o cualquier tecla para omitir: ')
+    print('\n' + ('-' * 49) + '\n')
+    view_credits = input(core.lang["LANG"]["LANG_CREDITS"])
 
     if view_credits.lower() == 'y':
         print('\n')

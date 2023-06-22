@@ -12,15 +12,16 @@ in english and spanish for now.'''
 
 setup(
     name='multi_maths',
-    version='1.0.0',
+    version='1.0.7',
     author='Gonzalo Mahserdjian',
     author_email='gsmx64@outlook.com',
     url='https://github.com/gsmx64/python-adv-bootcamp-cf/tree/main/class03/challenge',  # noqa: E501  # pylint: disable=C0301
     description='An arithmetic, geometry & statistics package.',
     long_description=LONG_DESCRIPTION_CONS,
     long_description_content_type="text/markdown",
-    license='GNU/GPL version 3',
+    license='GNU General Public License v3 (GPLv3)',
     packages=find_packages(),
+    package_data={'multi_maths': ['languages/*',]},
     entry_points={
             'console_scripts': [
                 'multi_maths = multi_maths:main',
@@ -29,7 +30,7 @@ setup(
     },
     classifiers=(
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: GNU/GPL version 3",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
     ),
     keywords='multi maths, maths, arithmetic, geometry, statistics',

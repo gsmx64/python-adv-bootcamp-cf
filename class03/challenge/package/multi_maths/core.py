@@ -1,8 +1,9 @@
 """ Core file for Multi_Maths Package """
 # __doc__ (Core file for testing modules and packages)
 
+import os
 import configparser
-from pathlib import Path
+from importlib.resources import files
 
 from multi_maths.mm_arithmetic import mm_arithmetic as mm_am
 from multi_maths.mm_geometry import mm_geometry as mm_ge
@@ -29,10 +30,10 @@ class Core:
         Set default language object, (en) for default
         """
 
-        lang_file = Path(f'multi_maths/languages/{self._lang_name}.ini')
+        lang_file = files("multi_maths").joinpath(f'languages/{self._lang_name}.ini')  # noqa: E501  # pylint: disable=C0301
 
-        if lang_file.exists() is False:
-            lang_file = Path('multi_maths/languages/en.ini')
+        if os.path.exists(lang_file) is False:
+            lang_file = files("multi_maths").joinpath('languages/en.ini')  # noqa: E501  # pylint: disable=C0301
 
         lang = configparser.ConfigParser()
         lang.sections()

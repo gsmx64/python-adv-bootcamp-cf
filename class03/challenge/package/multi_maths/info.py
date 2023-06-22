@@ -12,8 +12,8 @@ class Info():
         """
         info = {
             'title': 'Multi Maths Package',
-            'version': '1.0.0',
-            'date': '2023-06-19',
+            'version': '1.0.7',
+            'date': '2023-06-22',
             'developer': 'Gonzalo Mahserdjian',
             'developer_alias': 'gsmx64',
             'package': 'Bootcamp Código Facilito Python Avanzado',

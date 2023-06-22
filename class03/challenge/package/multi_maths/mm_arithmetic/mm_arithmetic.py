@@ -92,8 +92,8 @@ class MM_Arithmetic():  # pylint: disable=C0103
             Returns modulus calc
         """
 
-        result = (self.filter.value(args[0])
-                  * self.filter.value(args[1])) / 100
+        result = (self.filter.value(args[0]
+                                    ) * self.filter.value(args[1])) / 100
 
         if self.response == 'text':
             return self.lang["LANG"]["LANG_ARITH_MOD_RESULT"].format(result)

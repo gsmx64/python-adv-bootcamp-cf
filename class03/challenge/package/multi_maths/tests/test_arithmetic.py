@@ -2,7 +2,7 @@
 # __doc__ (Arithmetic Test file for testing modules and packages)
 
 import configparser
-from pathlib import Path
+from importlib.resources import files
 import unittest
 
 from multi_maths.mm_arithmetic.mm_arithmetic import MM_Arithmetic
@@ -18,7 +18,7 @@ class TestArithmetic(unittest.TestCase):
         Instance the MM_Arithmetic()
         """
 
-        lang_file = Path('../multi_maths/languages/en.ini')
+        lang_file = files("multi_maths").joinpath('languages/en.ini')  # noqa: E501  # pylint: disable=C0301
         self.lang = configparser.ConfigParser()
         self.lang.sections()
         self.lang.read(lang_file, 'UTF-8')

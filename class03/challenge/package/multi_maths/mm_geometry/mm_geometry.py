@@ -59,7 +59,7 @@ class MM_Geometry():  # pylint: disable=C0103
             Returns triangle perimeter calc
         """
 
-        result = self.filter.value(args[0])+self.filter.value(args[1])+self.filter.value(args[2])  # noqa: E501  # pylint: disable=C0301
+        result = self.filter.value(args[0]) + self.filter.value(args[1]) + self.filter.value(args[2])  # noqa: E501  # pylint: disable=C0301
 
         if self.response == 'text':
             return self.lang["LANG"]["LANG_GEOM_TP_RESULT"].format(result)

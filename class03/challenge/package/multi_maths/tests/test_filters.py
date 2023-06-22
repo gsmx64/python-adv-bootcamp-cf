@@ -2,7 +2,7 @@
 # __doc__ (Filters test file for testing modules and packages)
 
 import configparser
-from pathlib import Path
+from importlib.resources import files
 import unittest
 
 from multi_maths.filters import Filters
@@ -17,7 +17,7 @@ class TestFilters(unittest.TestCase):
         """
         Instance the filters()
         """
-        lang_file = Path('../multi_maths/languages/en.ini')
+        lang_file = files("multi_maths").joinpath('languages/en.ini')  # noqa: E501  # pylint: disable=C0301
         self.lang = configparser.ConfigParser()
         self.lang.sections()
         self.lang.read(lang_file, 'UTF-8')
