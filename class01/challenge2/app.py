@@ -1,6 +1,5 @@
-""" Main file for CodeBreaker"""
-# __doc__ (Main file for little game CodeBreaker where you must guess
-# the secret number)
+""" Main file for CodeBreaker:
+A little game where you must guess the secret number """
 
 from app.controllers.default import DefaultController
 

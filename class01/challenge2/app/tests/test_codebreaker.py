@@ -1,6 +1,4 @@
-""" Test file for CodeBreaker"""
-# __doc__ (Test file for little game CodeBreaker)
-
+""" Test file for CodeBreaker """
 import unittest
 import configparser
 
@@ -8,9 +6,7 @@ from app.models.codebreaker import CodeBreaker
 
 
 class TestCodeBreaker(unittest.TestCase):
-    """
-    Class for unittest CodeBreaker
-    """
+    """ Class for unittest CodeBreaker """
 
     def setUp(self):
         """
@@ -37,28 +33,36 @@ class TestCodeBreaker(unittest.TestCase):
         Random number insertion test
         """
         codebreaker = CodeBreaker(self.lang, self.cfg, '1078', 'Guest', False)
-        self.assertEqual('XX?X', codebreaker.challenge())
+        self.assertEqual('XX X', codebreaker.challenge())
 
     def test_codebreaker_test_chars2(self):
         """
         Random number insertion test
         """
-        codebreaker = CodeBreaker(self.lang, self.cfg, '1051', 'Guest', False)
-        self.assertEqual('XXX_', codebreaker.challenge())
+        codebreaker = CodeBreaker(self.lang, self.cfg, '1059', 'Guest', False)
+        self.assertEqual('XXX ', codebreaker.challenge())
 
     def test_codebreaker_test_chars3(self):
         """
         Random number insertion test
         """
         codebreaker = CodeBreaker(self.lang, self.cfg, '9782', 'Guest', False)
-        self.assertEqual('??_?', codebreaker.challenge())
+        self.assertEqual('  _ ', codebreaker.challenge())
 
-    def test_codebreaker_fail_chars(self):
+    def test_codebreaker_test_chars4(self):
         """
         Random number insertion test
         """
+        codebreaker = CodeBreaker(self.lang, self.cfg, '9504', 'Guest', False)
+        self.assertEqual(' __ ', codebreaker.challenge())
+
+    def test_codebreaker_fail_chars(self):
+        """
+        No repeated digits test
+        """
         codebreaker = CodeBreaker(self.lang, self.cfg, '9999', 'Guest', False)
-        self.assertEqual('????', codebreaker.challenge())
+        test = None
+        self.assertEqual(test, codebreaker.challenge())
 
 
 if __name__ == '__main__':

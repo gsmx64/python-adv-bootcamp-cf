@@ -1,6 +1,4 @@
 """ Default Controller for CodeBreaker"""
-# __doc__ (Default Controller file for little game CodeBreaker)
-
 import configparser
 
 from app.models.codebreaker import CodeBreaker
@@ -8,41 +6,17 @@ from app.views.default import DefaultView
 
 
 class DefaultController:
-    """
-    Class for Default Controller
-
-    Arguments:
-    None
-
-    Runs the App.
-
-    >>> app = DefaultController
-    >>> app.create_app()
-    True
-
-    TODO:
-        -
-
-    """
+    """ Class for Default Controller """
 
     @classmethod
-    def show_credits(cls, print_credits: True) -> object:
+    def show_credits(cls, print_credits: True) -> str | dict:
         """
-        Class-Method to return credits
-
-        Arguments:
-        cls
-        print_credits (boolean)
-
         Prints at exit the app all credits if print_credits is True,
         else returns a dictionary with credits (str/dict)
-
-        TODO:
-            -
         """
         info = {
             'title': 'CodeBreaker',
-            'version': '2.0.0',
+            'version': '2.0.1',
             'date': '2023-05-25',
             'developer': 'Gonzalo Mahserdjian',
             'developer_alias': 'gsmx64',
@@ -61,19 +35,10 @@ class DefaultController:
         return info
 
     @classmethod
-    def create_app(cls) -> str:
+    def create_app(cls) -> None:
         """
-        Class-Method to inits the app
-
-        Arguments:
-        cls
-
-        Inits this App (object)
-
-        TODO:
-            -
+        Inits this App
         """
-
         cls.cfg = configparser.ConfigParser()
         cls.cfg.sections()
         cls.cfg.read('app/config.ini', 'UTF-8')
@@ -102,17 +67,9 @@ class DefaultController:
         cls._go_to_menu(cls)
         print(cls.view.get_exit(cls.lang))
 
-    def _go_to_menu(self) -> object:
+    def _go_to_menu(self) -> None:
         """
-        Function to build the first level menu options
-
-        Arguments:
-        self
-
-        Builds the first level menu options (object)
-
-        TODO:
-            -
+        Builds the first level menu options
         """
         print(self.view.get_intro())
 
@@ -137,20 +94,10 @@ class DefaultController:
             self._go_to_menu(self)  # noqa: E501  # pylint: disable=too-many-function-args
             self.view.clean_screen()
 
-    def _go_to_option(self, mode) -> object:
+    def _go_to_option(self, mode) -> None:
         """
-        Function to build the first level menu options
-
-        Arguments:
-        self
-        mode (str)
-
-        Builds the first level menu options (object)
-
-        TODO:
-            -
+        Builds the first level menu options
         """
-
         self.view.clean_screen()
         print(self.view.get_intro())
         print(self.view.get_text_formated(
@@ -170,29 +117,41 @@ class DefaultController:
             self.total_tries = self.cfg.getint("OPTIONS", "TOTAL_TRIES_NORMAL")  # noqa: E501  # pylint: disable=pointless-statement
             print(self.view.get_text_formated(
                 self.lang["LANG"]["LANG_NORMAL_MODE"]))
-            random_with_duplicates = True
+            random_with_duplicates = False
 
         if mode == '3':  # Hard mode
             self.total_tries = self.cfg.getint("OPTIONS", "TOTAL_TRIES_HARD")  # noqa: E501  # pylint: disable=pointless-statement
             print(self.view.get_text_formated(
                 self.lang["LANG"]["LANG_HARD_MODE"]))
+            print(self.view.get_text_formated(
+                self.lang["LANG"]["LANG_DUPLICATED_DIGITS_ENABLED"]))
             random_with_duplicates = True
 
         print(self.view.get_insert_number(self.lang, self.total_tries))
         number = self.view.input_number(self.lang)
-        codebreaker = CodeBreaker(
-            self.lang, self.cfg, number, username, random_with_duplicates)
-        # print(codebreaker.realnumber) # TESTING!
+
+        codebreaker = CodeBreaker(self.lang,
+                                  self.cfg,
+                                  number,
+                                  username,
+                                  random_with_duplicates)
 
         while self.tries != self.total_tries:
 
             challenge = codebreaker.challenge()
 
             if challenge:
+                self.view.clean_screen()
+                print(self.view.get_intro())
+
+                print(self.view.get_text_formated(
+                    self.lang["LANG"]["LANG_NUMBER_INSERTED"].format(number)))
                 print(self.view.get_text_formated(
                     self.lang["LANG"]["LANG_OUTPUT_RESULT"].format(challenge)))
                 self.tries += 1
                 tries_remain = self.total_tries-self.tries+1
+
+                # print(f'TESTING!!! - REAL NUMBER: {codebreaker.realnumber}')
                 print(self.view.get_tries_remain(self.lang, tries_remain))
 
             codebreaker.update_number(self.view.input_number(self.lang))
@@ -203,26 +162,20 @@ class DefaultController:
                 self.view.input_pause(self.lang)
                 break
 
-        else:  # noqa: E501  # pylint: disable=useless-else-on-loop
-            print(self.view.get_game_over(self.lang, codebreaker.realnumber))  # noqa: E501  # pylint: disable=R0913
+        else:  # noqa: E501
+            print(self.view.get_game_over(self.lang,
+                                          codebreaker.realnumber))
             self.view.input_pause(self.lang)
-            self.view.clean_screen()
+
+        self.tries = 1
+        self.view.clean_screen()
+        self._go_to_menu(self)  # pylint: disable=E1121
 
     def current_language(self, current_language_input: str,
                          default_language='en') -> str:
         """
-        Function to get current short language code
-
-        Arguments:
-        self
-        current_language_input (str)
-        default_language (str)
-
-        Get from first input the current short language code or default
-        language from config (str)
-
-        TODO:
-            -
+        Gets from first input the current short tag for
+        language or default language from config (str)
         """
         if current_language_input == '1':
             current_language = 'en'
