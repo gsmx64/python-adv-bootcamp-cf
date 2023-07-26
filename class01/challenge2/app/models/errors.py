@@ -1,7 +1,7 @@
 """ Errors Model for CodeBreaker"""
 
 
-class CodeBreackerErrors():  # pylint: disable=too-few-public-methods
+class CodeBreackerErrors():
     """ CodeBreacker Errors Class """
 
     @classmethod

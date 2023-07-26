@@ -1,15 +1,17 @@
 """ Validations Model for CodeBreaker"""
+from app.models.base_model import BaseModel
 from app.models.errors import CodeBreackerErrors
 
 
-class CodeBreackerValidation:
+class CodeBreackerValidation(BaseModel):
     """ CodeBreacker Validation Class """
 
-    def __init__(self, lang: object, username: str) -> None:
+    def __init__(self, username: str, **kwargs) -> None:
         """
         Inits the class CodeBreacker Validation
         """
-        self.lang = lang
+        super().__init__(**kwargs)
+
         self.username = username
         self.errors = CodeBreackerErrors()
 
@@ -17,28 +19,29 @@ class CodeBreackerValidation:
         """
         Validates the 4 digits inserted are numbers
         """
-        if number.isnumeric():  # pylint: disable=R1705
+        if number.isnumeric():
             return True
-        else:
-            self.errors.show(
-                self.lang["LANG"]["LANG_VALIDATION_FOUR_NUMBERS"],
-                self.username)
-            return False
+
+        self.errors.show(
+            self.lang.get("LANG_VALIDATION_FOUR_NUMBERS"),
+            self.username)
+        return False
 
     def verify_number(self, number: str, secret=True) -> str:
         """
         Validates the secret and typed number in config file
         """
-        if not number and secret:  # pylint: disable=R1705
+        if not number and secret:
             return self.errors.show(
-                self.lang["LANG"]["LANG_VALIDATION_SECRET_EMPTY"],
+                self.lang.get("LANG_VALIDATION_SECRET_EMPTY"),
                 self.username)
-        elif not number and not secret:
+
+        if not number and not secret:
             return self.errors.show(
-                self.lang["LANG"]["LANG_VALIDATION_NUMBER_EMPTY"],
+                self.lang.get("LANG_VALIDATION_NUMBER_EMPTY"),
                 self.username)
-        else:
-            return number
+
+        return number
 
     def verify_repeated_digit(self, number: str) -> str:
         """
@@ -56,7 +59,7 @@ class CodeBreackerValidation:
 
         if len(repeated_numbers) >= 1:
             return self.errors.show(
-                self.lang["LANG"]["LANG_VALIDATION_DUPLICATED_DIGITS"],
+                self.lang.get("LANG_VALIDATION_DUPLICATED_DIGITS"),
                 self.username)
 
         return None
@@ -66,14 +69,14 @@ class CodeBreackerValidation:
         Validates lenght in secret and typed lists()
         """
         number_list = list(number)
-        if len(number_list) != 4 and secret:  # pylint: disable=R1705
+        if len(number_list) != 4 and secret:
             return self.errors.show(
-                self.lang["LANG"]["LANG_VALIDATION_SECRET_LENGHT"],
+                self.lang.get("LANG_VALIDATION_SECRET_LENGHT"),
                 self.username)
-        elif len(number_list) != 4 and not secret:
+
+        if len(number_list) != 4 and not secret:
             return self.errors.show(
-                self.lang["LANG"]["LANG_VALIDATION_NUMBER_LENGHT"].format(
-                    number),
+                self.lang.sprintf("LANG_VALIDATION_NUMBER_LENGHT", number),
                 self.username)
-        else:
-            return number_list
+
+        return number_list

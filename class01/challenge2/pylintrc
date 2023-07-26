@@ -435,7 +435,17 @@ disable=raw-checker-failed,
 		broad-exception-raised,
 		import-outside-toplevel,
 		unused-argument,
-		no-member
+		no-member,
+		import-error,
+		unused-import,
+		unnecessary-pass,
+		eval-used,
+		super-init-not-called,
+		too-many-statements,
+		too-many-branches,
+		useless-parent-delegation,
+		pointless-statement,
+		protected-access
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

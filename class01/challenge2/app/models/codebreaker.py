@@ -2,21 +2,23 @@
 import random
 from random import randint
 
+from app.models.base_model import BaseModel
 from app.models.validations import CodeBreackerValidation
 
 
-class CodeBreaker:
+class CodeBreaker(BaseModel):
     """ Class for CodeBreaker Model """
 
-    def __init__(self, lang: object, cfg: object,  # pylint: disable=R0913
-                 number: str,  username: str, duplicates: bool) -> None:
+    def __init__(self, number: str,  username: str, duplicates: bool,
+                 **kwargs) -> None:
         """
         Inits the class CodeBreaker (str)
         """
-        self.lang = lang
-        self.cfg = cfg
-        self.validation = CodeBreackerValidation(lang, username)
-        self.show_x_not_number = cfg.getboolean("OPTIONS", "USE_X_NOT_NUMBER")
+        super().__init__(**kwargs)
+
+        self.validation = CodeBreackerValidation(username, **kwargs)
+        self.show_x_not_number = self.cfg.get(
+            "USE_X_NOT_NUMBER", "OPTIONS", "boolean")
 
         self.username = username
         self.number = number
@@ -67,15 +69,15 @@ class CodeBreaker:
         """
         Returns the current secret number
         """
-        if isinstance(self.cfg.getboolean("OPTIONS", "USE_RAMDOM_NUMBER"),
-                      bool) and self.cfg.getboolean("OPTIONS",
-                                                    "USE_RAMDOM_NUMBER"):
+        if isinstance(self.cfg.get("USE_RAMDOM_NUMBER", "OPTIONS", "boolean"),
+                      bool) and self.cfg.get("USE_RAMDOM_NUMBER", "OPTIONS", "boolean"):
             if self.duplicates:
-                return str(randint(0, 9999))
+                random_number = str(randint(0, 99999))
+                return random_number[-4:]
 
             return ''.join(map(str, random.sample(range(0, 9), 4)))
 
-        return self.cfg["OPTIONS"]["SECRET_NUMBER"]
+        return self.cfg.get("SECRET_NUMBER", "OPTIONS")
 
     def _check_digit(self, number: list, secret_number: str) -> str:
         """
@@ -83,18 +85,23 @@ class CodeBreaker:
         """
         result_value = ''
 
-        if not isinstance(number, list):
-            return number
+        try:
+            if not isinstance(number, list):
+                return number
 
-        for key, value in enumerate(number, start=0):
-            if secret_number[key] == value:
-                if self.show_x_not_number:
-                    result_value += 'X'
-                else:
-                    result_value += number[key]
-            if secret_number[key] != value and value in secret_number:
-                result_value += '_'
-            if secret_number[key] != value and value not in secret_number:
-                result_value += ' '
+            for index, value in enumerate(number, start=0):
+                if secret_number[index] == value:
+                    if self.show_x_not_number:
+                        result_value += 'X'
+                    else:
+                        result_value += number[index]
+                if secret_number[index] != value and value in secret_number:
+                    result_value += '_'
+                if secret_number[index] != value and value not in secret_number:
+                    result_value += ' '
 
-        return result_value
+            return result_value
+        except IndexError as error:
+            message = f'ERROR: {error} - Index: {index} - Number: {"".join(number)} - Secret: {secret_number} - Result: {result_value}'
+            print(message)
+            return message
