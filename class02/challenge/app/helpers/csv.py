@@ -3,23 +3,23 @@ import csv
 import os
 from pathlib import Path
 
+from pmvcs.core.helpers.base_helper import BaseHelper
 
-class CsvHelper():
+
+class CsvHelper(BaseHelper):
     """ Class for Csv Helper """
     _data = ''
     _file_name = ''
     _file_extension = 'csv'
 
-    def __init__(self, data: list, file_name: str, **kwargs) -> None:
+    def __init__(self, **kwargs) -> None:
         """
         Init Csv Helper requirements
         """
-        self._data = data
-        self._file_name = f'{file_name}.{self._file_extension}'
+        super().__init__(**kwargs)
 
-        self.lang = kwargs['lang']
-        self.cfg = kwargs['cfg']
-        self.about = kwargs['about']
+        self._data = kwargs['data']
+        self._file_name = f"{kwargs['file_name']}.{self._file_extension}"
 
     @property
     def file_path(self) -> Path:
@@ -27,7 +27,7 @@ class CsvHelper():
         Returns file path
         """
         current_path = Path.cwd()
-        return current_path / self.cfg.get("APP_FOLDER", "DEFAULT") / 'static' / 'csv' / self._file_name
+        return current_path / self.pmvcs_cfg.get("APP_FOLDER", "DEFAULT") / 'static' / 'csv' / self._file_name
 
     @property
     def field_names(self) -> list:
@@ -76,6 +76,6 @@ class CsvHelper():
                 writer.writeheader()
                 writer.writerows(table_list)
 
-            return self.lang.sprintf("LANG_FILE_SAVED_TO", self._file_extension, self.file_path)
+            return self.pmvcs_lang.sprintf("LANG_FILE_SAVED_TO", self._file_extension, self.file_path)
         except Exception as error:
             return error

@@ -1,20 +1,19 @@
-""" Base View file for Dojo_Datastructures """
+""" Base View file for PMVCS APP """
+from app.interfaces.base_view import AbstractBaseView
 
 
-class BaseView():
-    """ Class for Base View  """
+class BaseView(AbstractBaseView):
+    """ Class for Base View """
 
     def __init__(self, **kwargs) -> None:
         """
         Init Base View requirements
         """
-        self.pmvcp_model = kwargs['pmvcp_model']
-        self.pmvcp_view = kwargs['pmvcp_view']
-        self.pmvcp_controller = kwargs['pmvcp_controller']
-        self.lang = kwargs['lang']
-        self.cfg = kwargs['cfg']
-        self.about = kwargs['about']
-        self.menus = kwargs['menus']
+        self.cfg = kwargs['pmvcs_cfg']
+        self.lang = kwargs['pmvcs_lang']
+        self.about = kwargs['pmvcs_about']
+        self.pmvcs_view = kwargs['pmvcs_view']
+        self.pmvcs_helper = kwargs['pmvcs_helper']
 
     def input_option(self) -> str:
         """
@@ -33,3 +32,21 @@ class BaseView():
         Function to get only city path formated (str)
         """
         return f'[{index}] {value} '
+
+    def get_path(self, sections: list) -> str:
+        """
+        Function to get path (str)
+        """
+        path = ''
+        i = 0
+
+        for section in sections:
+            if i == 0:
+                path += f'>>> {str(section)}'
+
+            if i >= 1:                
+                path += f' -> {str(section)}'
+                
+            i +=1
+
+        return path

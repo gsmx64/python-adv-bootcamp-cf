@@ -1,30 +1,35 @@
-""" Students By City Controller file for Dojo_Datastructures """
+""" Base Controller file for PMVCS APP """
+from app.interfaces.base_controller import AbstractBaseController
+from app.models.base_model import BaseModel
+from app.views.base_view import BaseView
 from app.models.data import DataModel
 
 
-class BaseController():
-    """ Class for Base Controller  """
+class BaseController(AbstractBaseController):
+    """ Class for Base Controller """
 
     def __init__(self, **kwargs) -> None:
         """
         Init Base Controller requirements
         """
-        self.pmvcp_model = kwargs['pmvcp_model']
-        self.pmvcp_view = kwargs['pmvcp_view']
-        self.pmvcp_controller = kwargs['pmvcp_controller']
-        self.lang = kwargs['lang']
-        self.cfg = kwargs['cfg']
-        self.about = kwargs['about']
-        self.menus = kwargs['menus']
+        self.lang = kwargs['pmvcs_lang']
+        self.cfg = kwargs['pmvcs_cfg']
+        self.about = kwargs['pmvcs_about']
+        self.menus = kwargs['pmvcs_menus']
+        self.pmvcs_view = kwargs['pmvcs_view']
+        self.pmvcs_helper = kwargs['pmvcs_helper']
+
+        self.model = BaseModel(**kwargs)
+        self.view = BaseView(**kwargs)
 
         self.data_model = DataModel(**kwargs)
 
     def execute(self) -> str:
         """
-        Excecute Base Controller
+        Execute Base Controller
         """
-        self.pmvcp_view.clean_screen()
-        print(self.pmvcp_view.get_intro())
+        self.pmvcs_view.clean_screen()
+        print(self.pmvcs_view.get_intro())
 
         self._get_submenu()
 
@@ -47,7 +52,7 @@ class BaseController():
             "LANG_SELECT_OUTPUT"), True, section, formats)
 
         print(self.model.make_export(section, formats, output))
-        print(self.pmvcp_view.input_pause())
+        print(self.pmvcs_view.input_pause())
 
     def _get_submenu_section(self, section_data: list, message: str, translate=False, *args) -> str:
         """
@@ -56,20 +61,20 @@ class BaseController():
         section = self._get_submenu_section_value(
             section_data, message, translate)
         while section is None:
-            self.pmvcp_view.clean_screen()
-            print(self.pmvcp_view.get_intro())
+            self.pmvcs_view.clean_screen()
+            print(self.pmvcs_view.get_intro())
             section = self._get_submenu_section_value(
                 section_data, message, translate)
 
             if section is not None:
                 break
 
-        self.pmvcp_view.clean_screen()
-        print(self.pmvcp_view.get_intro())
+        self.pmvcs_view.clean_screen()
+        print(self.pmvcs_view.get_intro())
 
         new_args = list(args)
         new_args.append(section)
-        print(self.pmvcp_view.get_path(self._get_submenu_path(*new_args)))
+        print(self.view.get_path(self._get_submenu_path(*new_args)))
 
         return section
 

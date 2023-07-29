@@ -1,23 +1,22 @@
-""" Base Model file for Dojo_Datastructures """
-from app.helpers.screen_helper import ScreenHelper
-from app.helpers.export_helper import ExportHelper
+""" Base Model file for PMVCS APP """
+from app.interfaces.base_model import AbstractBaseModel
 
 
-class BaseModel():
-    """ Class for Base Model  """
+class BaseModel(AbstractBaseModel):
+    """ Class for Base Model """
     _data = ''
 
     def __init__(self, **kwargs) -> None:
         """
         Init Base Model requirements
         """
-        self.pmvcp_model = kwargs['pmvcp_model']
-        self.pmvcp_view = kwargs['pmvcp_view']
-        self.pmvcp_controller = kwargs['pmvcp_controller']
-        self.lang = kwargs['lang']
-        self.cfg = kwargs['cfg']
-        self.about = kwargs['about']
-        self.menus = kwargs['menus']
+        self.pmvcs_cfg = kwargs['pmvcs_cfg']
+        self.pmvcs_lang = kwargs['pmvcs_lang']
+        self.pmvcs_helper = kwargs['pmvcs_helper']
+        
+        self.kwargs = { 'pmvcs_cfg': kwargs['pmvcs_cfg'],
+                        'pmvcs_lang': kwargs['pmvcs_lang'],
+                        'pmvcs_helper': kwargs['pmvcs_helper']}
 
         self._data = self.data
 
@@ -45,14 +44,13 @@ class BaseModel():
         if output == 'file':
             return self.make_export_to_file(section, formats)
 
-        raise Exception(self.lang.get("LANG_ERROR_NO_OUTPUT"))
+        raise Exception(self.pmvcs_lang.get("LANG_ERROR_NO_OUTPUT"))
 
     def make_export_to_screen(self, section: str, formats: str) -> dict:
         """
         Return screen export (dict)
         """
-        kwargs = {'lang': self.lang, 'cfg': self.cfg, 'about': self.about}
-        screen = ScreenHelper(**kwargs)
+        screen = self.pmvcs_helper.load_helper('screen', **self.kwargs)
 
         if formats == 'table':
             return screen.to_string_table(self._prepare_export(section))
@@ -66,15 +64,14 @@ class BaseModel():
         if formats == 'json':
             return screen.to_string_json(self._prepare_export(section))
 
-        raise Exception(self.lang.get("LANG_ERROR_NO_FORMAT"))
+        raise Exception(self.pmvcs_lang.get("LANG_ERROR_NO_FORMAT"))
 
-    def make_export_to_file(self, section: str, formats: str, output: str) -> dict:
+    def make_export_to_file(self, section: str, formats: str) -> dict:
         """
         Return file export (dict)
         """
-        kwargs = {'lang': self.lang, 'cfg': self.cfg, 'about': self.about}
-        export = ExportHelper(**kwargs)
-        file_name = input(self.lang.get("LANG_INSERT_FILE_NAME"))
+        export = self.pmvcs_helper.load_helper('export', **self.kwargs)
+        file_name = input(self.pmvcs_lang.get("LANG_INSERT_FILE_NAME"))
 
         if formats == 'table':
             return export.save_to_table(self._prepare_export(section), file_name)
@@ -88,7 +85,7 @@ class BaseModel():
         if formats == 'json':
             return export.save_to_json(self._prepare_export(section), file_name)
 
-        raise Exception(self.lang.get("LANG_ERROR_NO_FORMAT"))
+        raise Exception(self.pmvcs_lang.get("LANG_ERROR_NO_FORMAT"))
 
     def _prepare_export(self, section: str) -> list | dict:
         """

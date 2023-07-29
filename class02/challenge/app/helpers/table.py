@@ -3,23 +3,23 @@ import os
 from pathlib import Path
 from tabulate import tabulate
 
+from pmvcs.core.helpers.base_helper import BaseHelper
 
-class TableHelper():
+
+class TableHelper(BaseHelper):
     """ Class for Table Helper """
     _data = ''
     _file_name = ''
     _file_extension = 'html'
 
-    def __init__(self, data: list, file_name: str, **kwargs) -> None:
+    def __init__(self, **kwargs) -> None:
         """
         Init Table Helper requirements
         """
-        self._data = data
-        self._file_name = f'{file_name}.{self._file_extension}'
+        super().__init__(**kwargs)
 
-        self.lang = kwargs['lang']
-        self.cfg = kwargs['cfg']
-        self.about = kwargs['about']
+        self._data = kwargs['data']
+        self._file_name = f"{kwargs['file_name']}.{self._file_extension}"
 
     @property
     def file_path(self) -> Path:
@@ -27,7 +27,7 @@ class TableHelper():
         Returns file path
         """
         current_path = Path.cwd()
-        return current_path / self.cfg.get("APP_FOLDER", "DEFAULT") / 'static' / 'html' / self._file_name
+        return current_path / self.pmvcs_cfg.get("APP_FOLDER", "DEFAULT") / 'static' / 'html' / self._file_name
 
     @property
     def field_names(self) -> list:
@@ -66,6 +66,6 @@ class TableHelper():
             with open(self.file_path, 'w', newline=newline_value, encoding="utf-8") as file:
                 file.write(str(self.on_screen('firstrow', 'html')))
 
-            return self.lang.sprintf("LANG_FILE_SAVED_TO", self._file_extension, self.file_path)
+            return self.pmvcs_lang.sprintf("LANG_FILE_SAVED_TO", self._file_extension, self.file_path)
         except Exception as error:
             return error

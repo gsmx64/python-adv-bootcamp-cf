@@ -2,23 +2,23 @@
 import os
 from pathlib import Path
 
+from pmvcs.core.helpers.base_helper import BaseHelper
 
-class DictHelper():
+
+class DictHelper(BaseHelper):
     """ Class for Dict Helper """
     _data = ''
     _file_name = ''
     _file_extension = 'txt'
 
-    def __init__(self, data: list, file_name: str, **kwargs) -> None:
+    def __init__(self, **kwargs) -> None:
         """
         Init Dict Helper requirements
         """
-        self._data = data
-        self._file_name = f'{file_name}.{self._file_extension}'
+        super().__init__(**kwargs)
 
-        self.lang = kwargs['lang']
-        self.cfg = kwargs['cfg']
-        self.about = kwargs['about']
+        self._data = kwargs['data']
+        self._file_name = f"{kwargs['file_name']}.{self._file_extension}"
 
     @property
     def file_path(self) -> Path:
@@ -26,7 +26,7 @@ class DictHelper():
         Returns file path
         """
         current_path = Path.cwd()
-        return current_path / self.cfg.get("APP_FOLDER", "DEFAULT") / 'static' / 'txt' / self._file_name
+        return current_path / self.pmvcs_cfg.get("APP_FOLDER", "DEFAULT") / 'static' / 'txt' / self._file_name
 
     @property
     def field_names(self) -> list:
@@ -53,7 +53,7 @@ class DictHelper():
         try:
             with open(self.file_path, 'w', newline=newline_value, encoding="utf-8") as file:
                 file.writelines(self.on_screen())
-            return self.lang.sprintf("LANG_FILE_SAVED_TO", self._file_extension, self.file_path)
+            return self.pmvcs_lang.sprintf("LANG_FILE_SAVED_TO", self._file_extension, self.file_path)
         except Exception as error:
             return error
 

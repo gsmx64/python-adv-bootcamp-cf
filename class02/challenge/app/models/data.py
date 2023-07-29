@@ -3,20 +3,19 @@ import csv
 from pathlib import Path
 
 
-class DataModel:
+class DataModel():
     """ Class for Data Model """
 
     def __init__(self, **kwargs) -> None:
         """
         Init Data Model requirements
         """
-        self.pmvcp_model = kwargs['pmvcp_model']
-        self.pmvcp_view = kwargs['pmvcp_view']
-        self.pmvcp_controller = kwargs['pmvcp_controller']
-        self.lang = kwargs['lang']
-        self.cfg = kwargs['cfg']
-        self.about = kwargs['about']
-        self.menus = kwargs['menus']
+        self.lang = kwargs['pmvcs_lang']
+        self.cfg = kwargs['pmvcs_cfg']
+        self.about = kwargs['pmvcs_about']
+        self.menus = kwargs['pmvcs_menus']
+        self.pmvcs_view = kwargs['pmvcs_view']
+        self.pmvcs_helper = kwargs['pmvcs_helper']
 
     def get_data(self, mode='list_dict') -> dict:
         """

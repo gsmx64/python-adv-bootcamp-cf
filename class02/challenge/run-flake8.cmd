@@ -3,8 +3,10 @@
 ECHO -----------------------------------------
 ECHO Runing flake8...
 ECHO -----------------------------------------
-env\Scripts\flake8.exe main.py
+env\Scripts\flake8.exe app.py
 env\Scripts\flake8.exe app\__init__.py
+env\Scripts\flake8.exe app\__main__.py
+env\Scripts\flake8.exe app\app.py
 env\Scripts\flake8.exe app\controllers\__init__.py
 env\Scripts\flake8.exe app\controllers\average_age_by_career.py
 env\Scripts\flake8.exe app\controllers\base_controller.py
@@ -17,12 +19,16 @@ env\Scripts\flake8.exe app\controllers\students_by_country.py
 env\Scripts\flake8.exe app\controllers\students_cities_residence.py
 env\Scripts\flake8.exe app\decorators\__init__.py
 env\Scripts\flake8.exe app\helpers\__init__.py
-env\Scripts\flake8.exe app\helpers\csv_helper.py
-env\Scripts\flake8.exe app\helpers\dict_helper.py
-env\Scripts\flake8.exe app\helpers\export_helper.py
-env\Scripts\flake8.exe app\helpers\json_helper.py
-env\Scripts\flake8.exe app\helpers\screen_helper.py
-env\Scripts\flake8.exe app\helpers\table_helper.py
+env\Scripts\flake8.exe app\helpers\csv.py
+env\Scripts\flake8.exe app\helpers\dict.py
+env\Scripts\flake8.exe app\helpers\export.py
+env\Scripts\flake8.exe app\helpers\json.py
+env\Scripts\flake8.exe app\helpers\screen.py
+env\Scripts\flake8.exe app\helpers\table.py
+env\Scripts\flake8.exe app\interfaces\__init__.py
+env\Scripts\flake8.exe app\interfaces\base_controller.py
+env\Scripts\flake8.exe app\interfaces\base_model.py
+env\Scripts\flake8.exe app\interfaces\base_view.py
 env\Scripts\flake8.exe app\models\__init__.py
 env\Scripts\flake8.exe app\models\average_age_by_career.py
 env\Scripts\flake8.exe app\models\base_model.py
@@ -34,7 +40,7 @@ env\Scripts\flake8.exe app\models\students_by_average_age.py
 env\Scripts\flake8.exe app\models\students_by_city.py
 env\Scripts\flake8.exe app\models\students_by_country.py
 env\Scripts\flake8.exe app\models\students_cities_residence.py
-env\Scripts\flake8.exe app\tests\__init__.py
+env\Scripts\flake8.exe app\models\entities\__init__.py
 env\Scripts\flake8.exe app\views\__init__.py
 env\Scripts\flake8.exe app\views\average_age_by_career.py
 env\Scripts\flake8.exe app\views\base_view.py
@@ -45,4 +51,5 @@ env\Scripts\flake8.exe app\views\students_by_average_age.py
 env\Scripts\flake8.exe app\views\students_by_city.py
 env\Scripts\flake8.exe app\views\students_by_country.py
 env\Scripts\flake8.exe app\views\students_cities_residence.py
+env\Scripts\flake8.exe tests\__init__.py
 pause

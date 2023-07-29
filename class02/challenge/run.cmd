@@ -1,6 +1,6 @@
 @ECHO OFF
 ECHO -----------------------------------------
-ECHO Runing Package
+ECHO Runing APP
 ECHO -----------------------------------------
-python main.py
+python -m app
 pause
