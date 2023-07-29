@@ -5,6 +5,8 @@ ECHO Runing AutoPEP8...
 ECHO -----------------------------------------
 env\Scripts\autopep8.exe -i -r app.py
 env\Scripts\autopep8.exe -i -r app\__init__.py
+env\Scripts\autopep8.exe -i -r env\Scripts\pylint.exe app\__main__.py
+env\Scripts\autopep8.exe -i -r env\Scripts\pylint.exe app\app.py
 env\Scripts\autopep8.exe -i -r app\controllers\__init__.py
 env\Scripts\autopep8.exe -i -r app\controllers\base_controller.py
 env\Scripts\autopep8.exe -i -r app\controllers\codebreaker_easy.py

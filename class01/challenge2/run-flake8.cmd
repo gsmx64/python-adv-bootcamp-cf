@@ -5,6 +5,8 @@ ECHO Runing flake8...
 ECHO -----------------------------------------
 env\Scripts\flake8.exe app.py
 env\Scripts\flake8.exe app\__init__.py
+env\Scripts\flake8.exe app\__main__.py
+env\Scripts\flake8.exe app\app.py
 env\Scripts\flake8.exe app\controllers\__init__.py
 env\Scripts\flake8.exe app\controllers\base_controller.py
 env\Scripts\flake8.exe app\controllers\codebreaker_easy.py

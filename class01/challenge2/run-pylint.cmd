@@ -5,6 +5,8 @@ ECHO Runing PyLint...
 ECHO -----------------------------------------
 env\Scripts\pylint.exe app.py
 env\Scripts\pylint.exe app\__init__.py
+env\Scripts\pylint.exe app\__main__.py
+env\Scripts\pylint.exe app\app.py
 env\Scripts\pylint.exe app\controllers\__init__.py
 env\Scripts\pylint.exe app\controllers\base_controller.py
 env\Scripts\pylint.exe app\controllers\codebreaker_easy.py
