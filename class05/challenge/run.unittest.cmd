@@ -1,6 +1,6 @@
 @ECHO OFF
 ECHO -----------------------------------------
-ECHO Runing APP
+ECHO Runing Package
 ECHO -----------------------------------------
-python -m app
+python -m unittest -v
 pause
