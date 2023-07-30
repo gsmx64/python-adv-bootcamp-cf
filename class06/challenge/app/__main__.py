@@ -1,7 +1,5 @@
 """ App file for Python MVC Shell Framework Package """
-from pmvcs.core.router import Router
-
+from app.app import main
 
 if __name__ == '__main__':
-    app = Router()
-    app.create_app()
+    main()

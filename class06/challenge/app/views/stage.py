@@ -1,137 +1,64 @@
 """ Stage View for Recital """
-# __doc__ (Stage View Model file for little Recital app for testing
-# Queues and Piles)
 from pathlib import Path
+
+from pmvcs.core.views.base_view import BaseView
 from app.views.stage_logo import StageLogo
 
 
-class StageView():
-    """
-    Class for Stage View Model
-
-    Arguments:
-    queues (class)
-
-    Returns a orderer ramdom list from 3 optional modes.
-
-    >>> stage = StageView()
-    True
-
-    TODO:
-        -
-
-    """
+class StageView(BaseView):
+    """ Returns a orderer ramdom list from 3 optional modes. """
 
     _pit_list = []
     _queue_list = []
 
-    def __init__(self, queues: list, lang: object) -> str:
+    def __init__(self, queues: list, **kwargs) -> None:
         """
-        Init Function
-
-        Arguments:
-        self
-        queues (class)
+        Init Stage View requirements
         """
+        super().__init__(**kwargs)
 
         self._pit_list = queues.pit_list
         self._queue_list = queues.queue_list
-        self.lang = lang
 
     @property
     def pit_list(self) -> list:
         """
-        Property Getter for pit list
-
-        Arguments:
-        self
-
-        Returns getter of pit_list for data builder (list)
-
-        >>> self.pit_list
-        []
-
-        TODO:
-            -
+        Returns getter of pit_list for data builder
         """
         return self._pit_list
 
     @pit_list.setter
     def pit_list(self, value: str) -> list:
         """
-        Function Setter for pit list
-
-        Arguments:
-        self
-        value (str)
-
-        Returns setter for pit_list to select data builder (list)
-
-        >>> stage = StageView()
-        >>> stage.pit_list
-        []
-
-        TODO:
-            -
+        Returns setter for pit_list to select data builder
         """
         self._pit_list = value
 
     @property
     def queue_list(self) -> list:
         """
-        Property Getter for queue list
-
-        Arguments:
-        self
-
-        Returns getter of pit_list for data builder (list)
-
-        >>> self.queue_list
-        []
-
-        TODO:
-            -
+        Returns getter of pit_list for data builder
         """
         return self._queue_list
 
     @queue_list.setter
     def queue_list(self, value: str) -> list:
         """
-        Function Setter for queue list
-
-        Arguments:
-        self
-        value (str)
-
-        Returns setter for queue_list to select data builder (list)
-
-        >>> stage = StageView()
-        >>> stage.queue_list
-        []
-
-        TODO:
-            -
+        Returns setter for queue_list to select data builder
         """
         self._queue_list = value
 
     @property
     def get_stage(self) -> str:
         """
-        Property to return stage view
-
-        Arguments:
-        self
-
-        Return stage container view (str)
-
-        TODO:
-            -
+        Return stage container view
         """
         try:
             screen_lines = []
-            logo = StageLogo.get_logo(self.lang)
+            kwargs = {'pmvcs_cfg': self.cfg, 'pmvcs_lang': self.lang, 'pmvcs_about': None}
+            logo = StageLogo(**kwargs)
 
-            screen_lines.append(''.join(logo).center(110))
+            screen_lines.append(''.join(logo.get_logo()).center(110))
 
             screen_lines.append(self.line_break().center(40))
             screen_lines.append(
@@ -170,38 +97,19 @@ class StageView():
             current_path = Path.cwd()
             txt_path = current_path/'app'/'static'/'txt'/'stage_logo.txt'
             print(
-                self.lang["LANG"]["LANG_ERROR_READING_TXT"].format(txt_path),
+                self.lang.sprintf("LANG_ERROR_READING_TXT", txt_path),
                 f'TypeError: {error}')
             return None
 
     def line_break(self, counter=1) -> str:
         """
-        Function for line brake
-
-        Arguments:
-        self
-        counter (int)
-
-        Return line brakes by counter var (str)
-
-        TODO:
-            -
+        Return line brakes by counter var
         """
         return '\n'*counter
 
-    def get_queue_container(self, mode: str, split=0) -> list:
+    def get_queue_container(self, mode: str, split=0) -> dict:
         """
-        Function to return queue container view
-
-        Arguments:
-        self
-        mode (str)
-        split (int)
-
-        Return queue container view data, returns a dict() (dict)
-
-        TODO:
-            -
+        Return queue container view data, returns a dict()
         """
         if mode == 'pit':
             current_list = self._pit_list
@@ -261,22 +169,7 @@ class StageView():
                       close_l: bool, line_l: int, close_r: bool,
                       line_r: int) -> dict:
         """
-        Function to return little queue box
-
-        Arguments:
-        self
-        width (int)
-        height (int)
-        text (str)
-        close_l (bool)
-        line_l (int)
-        close_r (bool)
-        line_r (int)
-
-        Return a little queue box, returns a dict() (dict)
-
-        TODO:
-            -
+        Return a little queue box, returns a dict()
         """
         qbox_center = qbox_line_left = qbox_line_right = ''
         qbox_line_left_sp = qbox_line_right_sp = ''
@@ -322,17 +215,7 @@ class StageView():
 
     def format_text(self, text: str, replacement: str) -> str:
         """
-        Function to format the name spaces
-
-        Arguments:
-        self
-        text (str)
-        replacement (str)
-
-        Return a fixed text limited by 12 chars (list)
-
-        TODO:
-            -
+        Return a fixed text limited by 12 chars
         """
         if len(text) > len(replacement):
             text = text[:12]

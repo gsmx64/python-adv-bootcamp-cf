@@ -1,50 +1,27 @@
 """ Stage Logo View for Recital """
-# __doc__ (Stage Logo View Model file for little Recital app for testing
-# Queues and Piles)
-
 from pathlib import Path
 
+from pmvcs.core.views.base_view import BaseView
 
-class StageLogo:
-    """
-    Class for Stage View Model
 
-    Arguments:
-    -
+class StageLogo(BaseView):
+    """ Returns a orderer ramdom list from 3 optional modes. """
 
-    Returns a orderer ramdom list from 3 optional modes.
-
-    >>> stage_logo = StageLogo()
-    string
-
-    TODO:
-        -
-
-    """
-
-    @classmethod
-    def get_logo(cls, lang: object) -> object:
+    def __init__(self, **kwargs) -> None:
         """
-        Function to get a stage logo in ascii art
+        Init Stage View requirements
+        """
+        super().__init__(**kwargs)
 
-        Arguments:
-        self
-
+    def get_logo(self) -> str:
+        """
         Returns a stage logo in ascii art from a text file
-        inside /app/static/txt (str)
-
-        >>> stage_logo = StageLogo()
-        >>> stage_logo.get_logo()
-        string
-
-        TODO:
-            -
+        inside /app/static/txt
         """
-
         try:
             content = []
             current_path = Path.cwd()
-            txt_path = current_path/'app'/'static'/'txt'/'stage_logo.txt'
+            txt_path = current_path/self.cfg.get("APP_FOLDER", "DEFAULT")/'static'/'txt'/'stage_logo.txt'
 
             with open(txt_path, 'r', encoding="utf-8") as file:
                 content = file.read()
@@ -52,13 +29,11 @@ class StageLogo:
 
                 return content
         except FileNotFoundError as error:
-            print(
-                lang["LANG"]["LANG_ERROR_READING_TXT"].format(txt_path),
+            print(self.lang.sprintf("LANG_ERROR_READING_TXT", txt_path),
                 f'Error: {error}')
             return None
         except KeyError as error:
-            print(
-                lang["LANG"]["LANG_ERROR_READING_TXT"].format(txt_path),
+            print(self.lang.sprintf("LANG_ERROR_READING_TXT", txt_path),
                 f'Error: {error}')
             return None
 
